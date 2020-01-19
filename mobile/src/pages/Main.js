@@ -5,6 +5,7 @@ import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 import { MaterialIcons } from '@expo/vector-icons';
 
 import api from '../services/api';
+import { connect, disconnect, subscribeToNewDevs} from '../services/socket';
 
 function Main( { navigation } ){
 
@@ -31,9 +32,27 @@ function Main( { navigation } ){
     }
     loadInitialPosition();
   },[]);
+  
+  useEffect(() => {
+    // Fica escutando a variável dev, sempre que ela mudar verifica 
+    // se o backend enviou novos devs e atualiza a tela do client
+    subscribeToNewDevs(dev => setDevs([...devs,dev]));
+  },[devs]);
 
   if (!currentRegion) {
     return null;
+  }
+
+  function setupWebsocket(){
+    disconnect(); // Ao reiniciar a aplicação disconecta antes de criar outra conexao.(garante somente uma conexão por client)
+
+
+    const { latitude, longitude} = currentRegion;
+    connect( 
+      latitude,
+      longitude,
+      techs
+    );
   }
 
   async function loadDevs(){
@@ -47,6 +66,8 @@ function Main( { navigation } ){
       }
     });
     setDevs(response.data);
+    setupWebsocket();
+
   }
 
   function handleRegionChanged(region){
