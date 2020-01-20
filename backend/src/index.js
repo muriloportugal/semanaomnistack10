@@ -4,13 +4,14 @@ const routes = require('./routes');
 const cors = require('cors');
 const http = require('http');
 const { setupWebsocket } = require('./websocket');
+require('dotenv').config()
 
 const app = express();
 const server = http.Server(app); // Para a comunicação via websocket
 
 setupWebsocket(server);
 
-mongooose.connect('mongodb+srv://mpmongouser:bXBtb25nb3VzZXI2020@cluster0-cvvcq.gcp.mongodb.net/omnistack10?retryWrites=true&w=majority',{
+mongooose.connect(process.env.DB_STRING,{
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
