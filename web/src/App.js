@@ -19,6 +19,7 @@ import './Main.css';
 
 function App() {
   const [devs, setDevs] = useState([]);
+  const [edit, setEdit] = useState({});
 
   useEffect(() => { // Busca no BD os Devs para serem exibidos na página inicial
     async function loadDevs(){
@@ -28,24 +29,39 @@ function App() {
     loadDevs();
   },[]); // Array vazio no final para executar somente uma vez quando carregar este componente.
 
-  async function handleAddDev(data){
+  async function handleAddDev(data){ // Salva um novo Dev
     const response = await api.post('/devs', data);
     
     setDevs([...devs, response.data]);
   }
 
+  async function deleteDev(github_username){ // Deleta um Dev
+    const response = await api.delete('/devs', {data: github_username}); // axios utiliza .detele(url,{headers:{Authorization: authorizationToken},data:{source: source}});
+    setDevs(response.data);
+  }
+
+  async function editMode(devData){ // Editar Dev
+    setEdit(devData);
+    
+  }
+
+  async function editDev(data){
+    const response = await api.patch('/devs',data);
+    setDevs(response.data);
+  }
+
   return (
     <div id="app">
       <aside>
-        <strong>Cadastrar</strong>
-        <DevForm onSubmit={handleAddDev}/>
+        
+        <DevForm onSubmit={handleAddDev} editMode={edit} onEdit={editDev}/>
       </aside>
       
       <main>
         <ul>
           {devs.map( dev => {
             return (
-              <DevItem key={dev._id} dev={dev} />
+              <DevItem key={dev._id} dev={dev} onDelete={deleteDev} editMode={editMode} />
             );
           })}
         </ul>

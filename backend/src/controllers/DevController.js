@@ -50,6 +50,7 @@ module.exports = {
   },
 
   async delete(request, response){
+    console.log(request.body);
     const { github_username } = request.body;
     if ( github_username ){
       const dev = await Dev.deleteOne({ github_username});

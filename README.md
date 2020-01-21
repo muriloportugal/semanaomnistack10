@@ -27,7 +27,7 @@ npm install
 
 ## Configuração  
 Renomeie o arquivo [backend/.env_sample](./backend/.env_sample) para `./backend/.env` e insira sua string de conexão com o MongoDB no parâmetro `DB_STRING=`.  
-Altere o endereço de onde esta rodando o seu serviço de back-end nos arquivos [mobile/src/services/api.js](./mobile/src/services/api.js) e [mobile/src/services/socket.js](./mobile/src/services/api.js).  
+Altere o endereço de onde esta rodando o seu serviço de back-end nos arquivos [mobile/src/services/api.js](./mobile/src/services/api.js), [mobile/src/services/socket.js](./mobile/src/services/api.js) e [web/src/services/api.js](./web/src/services/api.js).  
 
 ## Teste
 Inicie o serviço de back-end.  
@@ -65,3 +65,7 @@ Se um novo dev for cadastrado na página após você realizar uma busca, e este 
 <img src="https://img.shields.io/badge/node.js@lts-12.14.1-informational?logo=Node.JS"></img>
 <img src="https://img.shields.io/badge/react-16.12.0-informational?logo=react"></img>
 <img src="https://img.shields.io/badge/expo--CLI-3.11.7-informational?logo=expo"></img>
+
+## Licença
+
+[MIT](./LICENSE) &copy;
