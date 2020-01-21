@@ -14,7 +14,8 @@ setupWebsocket(server);
 mongooose.connect(process.env.DB_STRING,{
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 //app.use( cors( { origin: 'http://localhost:3000' } ) );

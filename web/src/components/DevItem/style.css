@@ -3,6 +3,7 @@ li.dev-item {
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
   border-radius: 2px;
   padding: 20px;
+  padding-bottom: 5px;
 }
 
 li.dev-item header {
@@ -14,12 +15,16 @@ li.dev-item header {
 li.dev-item header img {
   width: 54px;
   height: 54px;
+  min-width: 54px;
+  min-height: 54px;
   border-radius: 50%;
 }
 
 li.dev-item header .user-info{
-  margin-left: 10px;
+  margin-left: 5px;
 }
+
+
 
 .user-info strong{
   display: block;

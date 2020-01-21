@@ -47,5 +47,51 @@ module.exports = {
     }
 
     return response.json(dev);
+  },
+
+  async delete(request, response){
+    const { github_username } = request.body;
+    if ( github_username ){
+      const dev = await Dev.deleteOne({ github_username});
+      if ( dev.deletedCount === 1){
+        // Após deletado envia todos os devs novamente
+        const devs = await Dev.find();
+        return response.json(devs);
+      }
+    }else{
+      return response.status(400).json({message: 'Bad Request'});
+    }
+  },
+
+  async patch(request,response){
+    const { github_username, techs, latitude, longitude } = request.body;
+    const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
+    // Se o apiResponse.data não tiver o valor de name, ele assume o valor de login
+    const { name = login, avatar_url, bio } = apiResponse.data;
+    const techsArray = parseStrigAsArray(techs);
+  
+    const location = {
+      type: 'Point',
+      coordinates: [longitude, latitude]
+    };
+  
+    dev = await Dev.updateOne({
+      github_username
+    }, {
+      name,
+      github_username,
+      avatar_url,
+      bio,
+      techs: techsArray,
+      location
+    });
+    
+    if( dev.nModified === 1 ){
+      // Após alterado envia todos os devs novamente
+      const devs = await Dev.find();
+      return response.json(devs);
+    }else{
+      return response.status(400).json({message: 'Bad Request'});
+    }
   }
 };

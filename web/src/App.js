@@ -26,7 +26,7 @@ function App() {
       setDevs(response.data);
     };
     loadDevs();
-  },[]); // Array vazio no final para executra somente uma vez quando carregar este componente.
+  },[]); // Array vazio no final para executar somente uma vez quando carregar este componente.
 
   async function handleAddDev(data){
     const response = await api.post('/devs', data);
